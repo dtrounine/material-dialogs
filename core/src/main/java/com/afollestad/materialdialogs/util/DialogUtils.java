@@ -122,10 +122,13 @@ public class DialogUtils {
         return ContextCompat.getColor(context, colorId);
     }
 
+    @Nullable
     public static String resolveString(Context context, @AttrRes int attr) {
         TypedValue v = new TypedValue();
-        context.getTheme().resolveAttribute(attr, v, true);
-        return (String) v.string;
+        if (context.getTheme().resolveAttribute(attr, v, true) && v.string != null) {
+            return v.toString();
+        }
+        return null;
     }
 
     private static int gravityEnumToAttrInt(GravityEnum value) {
